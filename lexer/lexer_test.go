@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"rodrigorvsn/interpreter/token"
 	"testing"
 	// "rodrigorvsn/token"
 )
@@ -12,7 +13,7 @@ func TestNextToken(t *testing.T) {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
-		{token.assign, "="},
+		{token.ASSIGN, "="},
 		{token.PLUS, "+"},
 		{token.LPAREN, "("},
 		{token.RPAREN, ")"},
