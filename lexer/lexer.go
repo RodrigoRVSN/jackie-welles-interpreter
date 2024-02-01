@@ -1,6 +1,8 @@
 package lexer
 
-import "rodrigorvsn/interpreter/token"
+import (
+	"rodrigorvsn/interpreter/token"
+)
 
 type Lexer struct {
 	input        string
@@ -46,6 +48,18 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.COMMA, l.char)
 	case '+':
 		tok = newToken(token.PLUS, l.char)
+	case '-':
+		tok = newToken(token.MINUS, l.char)
+	case '!':
+		tok = newToken(token.BANG, l.char)
+	case '/':
+		tok = newToken(token.SLASH, l.char)
+	case '*':
+		tok = newToken(token.ASTERISK, l.char)
+	case '<':
+		tok = newToken(token.LT, l.char)
+	case '>':
+		tok = newToken(token.GT, l.char)
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
@@ -90,7 +104,7 @@ func (l *Lexer) readNumber() string {
 }
 
 func isDigit(char byte) bool {
-	return '0' <= char || char <= '9'
+	return '0' <= char && char <= '9'
 }
 
 func isLetter(char byte) bool {
