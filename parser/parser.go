@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"rodrigorvsn/interpreter/ast"
 	"rodrigorvsn/interpreter/lexer"
 	"rodrigorvsn/interpreter/token"
@@ -10,16 +11,21 @@ type Parser struct {
 	l         *lexer.Lexer
 	curToken  token.Token
 	peekToken token.Token
+	errors    []string
 }
 
 func New(l *lexer.Lexer) *Parser {
-	p := &Parser{l: l}
+	p := &Parser{l: l, errors: []string{}}
 
 	// set current and peek tokens
 	p.nextToken()
 	p.nextToken()
 
 	return p
+}
+
+func (p *Parser) Errors() []string {
+	return p.errors
 }
 
 func (p *Parser) nextToken() {
@@ -83,4 +89,9 @@ func (p *Parser) ParseProgram() *ast.Program {
 	}
 
 	return program
+}
+
+func (p *Parser) peekError(t token.TokenType) {
+	message := fmt.Sprintf("expected next token to be %s, got %s instead", t, p.peekToken.Type)
+	p.errors = append(p.errors, message)
 }
